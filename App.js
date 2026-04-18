@@ -23,6 +23,30 @@ const videos = [
     uri: 'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4',
     username: '@chrome_cast',
     description: 'For Bigger Blazes - Super high quality #4k'
+  },
+  {
+    id: '4',
+    uri: 'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/Sintel.mp4',
+    username: '@sintel_warrior',
+    description: 'Sintel - A beautiful animated short film #fantasy'
+  },
+  {
+    id: '5',
+    uri: 'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/TearsOfSteel.mp4',
+    username: '@scifi_lover',
+    description: 'Tears of Steel - Amazing Sci-Fi effects! #scifi'
+  },
+  {
+    id: '6',
+    uri: 'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/WeAreGoingOnBullrun.mp4',
+    username: '@travel_vlog',
+    description: 'We Are Going On Bullrun - Extreme adventure! #adventure'
+  },
+  {
+    id: '7',
+    uri: 'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/WhatCarCanYouGetForAGrand.mp4',
+    username: '@car_enthusiast',
+    description: 'What car can you get for a grand? #cars #challenge'
   }
 ];
 
