@@ -131,6 +131,9 @@ export default function App() {
           <TouchableOpacity style={styles.buttonSecondary} onPress={() => Alert.alert('Coming Soon', 'Sign Up is currently disabled.')}>
             <Text style={styles.buttonSecondaryText}>Sign Up</Text>
           </TouchableOpacity>
+          <TouchableOpacity style={styles.buttonGoogle} onPress={() => Alert.alert('Coming Soon', 'Google validation pending.')}>
+            <Text style={styles.buttonGoogleText}>Connect with Google</Text>
+          </TouchableOpacity>
           <TouchableOpacity style={styles.buttonOutline} onPress={() => setShowLanding(false)}>
             <Text style={styles.buttonOutlineText}>Guest</Text>
           </TouchableOpacity>
@@ -203,6 +206,20 @@ const styles = StyleSheet.create({
   },
   buttonSecondaryText: {
     color: '#ffffff',
+    fontWeight: 'bold',
+    fontSize: 16,
+  },
+  buttonGoogle: {
+    backgroundColor: '#ffffff',
+    borderWidth: 1,
+    borderColor: '#dddddd',
+    paddingVertical: 15,
+    borderRadius: 8,
+    alignItems: 'center',
+    marginBottom: 15,
+  },
+  buttonGoogleText: {
+    color: '#555555',
     fontWeight: 'bold',
     fontSize: 16,
   },
