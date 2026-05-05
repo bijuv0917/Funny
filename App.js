@@ -1,7 +1,14 @@
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View, Dimensions, FlatList, TouchableWithoutFeedback, Image, TouchableOpacity, Alert } from 'react-native';
 import { Video, ResizeMode } from 'expo-av';
-import React, { useRef, useState } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
+import * as WebBrowser from 'expo-web-browser';
+import * as Google from 'expo-auth-session/providers/google';
+
+WebBrowser.maybeCompleteAuthSession();
+
+// ⚠️ REPLACE THIS with your actual Google OAuth Android Client ID from Google Cloud Console
+const GOOGLE_CLIENT_ID = 'YOUR_GOOGLE_CLIENT_ID.apps.googleusercontent.com';
 
 const { width, height } = Dimensions.get('window');
 
@@ -110,6 +117,45 @@ const VideoItem = ({ item, isActive }) => {
 export default function App() {
   const [showLanding, setShowLanding] = useState(true);
   const [activeVideoIndex, setActiveVideoIndex] = useState(0);
+  const [googleLoading, setGoogleLoading] = useState(false);
+
+  const [request, response, promptAsync] = Google.useAuthRequest({
+    androidClientId: GOOGLE_CLIENT_ID,
+  });
+
+  useEffect(() => {
+    if (response?.type === 'success') {
+      const { authentication } = response;
+      // Fetch user info from Google
+      fetch('https://www.googleapis.com/userinfo/v2/me', {
+        headers: { Authorization: `Bearer ${authentication.accessToken}` },
+      })
+        .then(res => res.json())
+        .then(userInfo => {
+          Alert.alert(
+            '✅ Google Login Successful!',
+            `Welcome, ${userInfo.name}!\n${userInfo.email}`,
+            [{ text: 'Start Watching', onPress: () => setShowLanding(false) }]
+          );
+        })
+        .catch(() => Alert.alert('Error', 'Failed to fetch Google profile.'));
+    } else if (response?.type === 'error') {
+      Alert.alert('Google Sign-In Failed', response.error?.message || 'Something went wrong.');
+    }
+    setGoogleLoading(false);
+  }, [response]);
+
+  const handleGoogleSignIn = async () => {
+    if (GOOGLE_CLIENT_ID === 'YOUR_GOOGLE_CLIENT_ID.apps.googleusercontent.com') {
+      Alert.alert(
+        'Setup Required',
+        'Please replace GOOGLE_CLIENT_ID in App.js with your actual Google OAuth Client ID from Google Cloud Console.'
+      );
+      return;
+    }
+    setGoogleLoading(true);
+    await promptAsync();
+  };
 
   const onViewableItemsChanged = useRef(({ viewableItems }) => {
     if (viewableItems.length > 0) {
@@ -131,8 +177,14 @@ export default function App() {
           <TouchableOpacity style={styles.buttonSecondary} onPress={() => Alert.alert('Coming Soon', 'Sign Up is currently disabled.')}>
             <Text style={styles.buttonSecondaryText}>Sign Up</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={styles.buttonGoogle} onPress={() => Alert.alert('Coming Soon', 'Google validation pending.')}>
-            <Text style={styles.buttonGoogleText}>Connect with Google</Text>
+          <TouchableOpacity
+            style={[styles.buttonGoogle, googleLoading && { opacity: 0.6 }]}
+            onPress={handleGoogleSignIn}
+            disabled={googleLoading}
+          >
+            <Text style={styles.buttonGoogleText}>
+              {googleLoading ? '⏳ Connecting...' : '🔵 Connect with Google'}
+            </Text>
           </TouchableOpacity>
           <TouchableOpacity style={styles.buttonOutline} onPress={() => setShowLanding(false)}>
             <Text style={styles.buttonOutlineText}>Guest</Text>

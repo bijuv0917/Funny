@@ -31,6 +31,9 @@
         "projectId": "2f5d0b24-a338-4c53-ab59-1a416d08f628"
       }
     },
-    "owner": "enoughbijuworld"
+    "owner": "enoughbijuworld",
+    "plugins": [
+      "expo-web-browser"
+    ]
   }
 }
