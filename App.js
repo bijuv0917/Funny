@@ -8,7 +8,7 @@ import * as Google from 'expo-auth-session/providers/google';
 WebBrowser.maybeCompleteAuthSession();
 
 // ⚠️ REPLACE THIS with your actual Google OAuth Android Client ID from Google Cloud Console
-const GOOGLE_CLIENT_ID = 'YOUR_GOOGLE_CLIENT_ID.apps.googleusercontent.com';
+const GOOGLE_CLIENT_ID = '780278378991-9bgtt7f1927mo0obsm0556pes8tp4r4m.apps.googleusercontent.com';
 
 const { width, height } = Dimensions.get('window');
 
